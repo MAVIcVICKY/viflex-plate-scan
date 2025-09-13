@@ -1,11 +1,163 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { useToast } from '@/hooks/use-toast';
+import { ImageUpload } from '@/components/ImageUpload';
+import { MacroResults } from '@/components/MacroResults';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { AlertTriangle, Utensils } from 'lucide-react';
+
+interface MacroData {
+  protein_g: number;
+  carbs_g: number;
+  fat_g: number;
+}
 
 const Index = () => {
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [results, setResults] = useState<MacroData | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
+
+  const handleImageSelect = (file: File) => {
+    setSelectedImage(file);
+    setResults(null);
+    setError(null);
+  };
+
+  const handleRemoveImage = () => {
+    setSelectedImage(null);
+    setResults(null);
+    setError(null);
+  };
+
+  const analyzeImage = async () => {
+    if (!selectedImage) return;
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const formData = new FormData();
+      formData.append('image', selectedImage);
+
+      const response = await fetch('/api/analyze-meal', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to analyze meal');
+      }
+
+      const data: MacroData = await response.json();
+      setResults(data);
+      
+      toast({
+        title: "Analysis Complete!",
+        description: "Your meal has been successfully analyzed.",
+      });
+    } catch (err) {
+      const errorMessage = 'Failed to analyze meal. Please try again.';
+      setError(errorMessage);
+      
+      toast({
+        title: "Analysis Failed",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <div className="min-h-screen bg-gradient-surface">
+      <div className="container mx-auto px-4 py-8 max-w-2xl">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <div className="flex items-center justify-center mb-6">
+            <div className="p-4 bg-gradient-hero rounded-2xl shadow-glow">
+              <Utensils className="w-12 h-12 text-white" />
+            </div>
+          </div>
+          
+          <h1 className="text-5xl font-bold bg-gradient-hero bg-clip-text text-transparent mb-4">
+            Viflex Calories
+          </h1>
+          
+          <p className="text-xl text-muted-foreground font-medium">
+            Snap a Meal. See the Macros.
+          </p>
+          
+          <p className="text-sm text-muted-foreground mt-2 max-w-md mx-auto">
+            Get instant nutrition analysis for any meal with our AI-powered macro tracker
+          </p>
+        </div>
+
+        {/* Main Content */}
+        <div className="space-y-8">
+          {/* Image Upload */}
+          <ImageUpload
+            onImageSelect={handleImageSelect}
+            selectedImage={selectedImage}
+            onRemoveImage={handleRemoveImage}
+            isLoading={isLoading}
+          />
+
+          {/* Analyze Button */}
+          {selectedImage && (
+            <div className="text-center">
+              <Button
+                onClick={analyzeImage}
+                disabled={isLoading || !selectedImage}
+                size="lg"
+                className="w-full max-w-md bg-gradient-hero hover:opacity-90 text-white font-semibold py-4 px-8 text-lg shadow-lg hover:shadow-glow transition-all duration-300 ease-smooth"
+              >
+                {isLoading ? 'Analyzing...' : 'Analyze Meal'}
+              </Button>
+            </div>
+          )}
+
+          {/* Loading State */}
+          {isLoading && <LoadingSpinner />}
+
+          {/* Error Message */}
+          {error && (
+            <Card className="p-6 border-destructive/20 bg-destructive/5">
+              <div className="flex items-center space-x-3 text-destructive">
+                <AlertTriangle className="w-6 h-6 flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold">Analysis Error</h3>
+                  <p className="text-sm mt-1">{error}</p>
+                </div>
+              </div>
+            </Card>
+          )}
+
+          {/* Results */}
+          {results && !isLoading && (
+            <div className="space-y-6">
+              <div className="text-center">
+                <h2 className="text-2xl font-bold text-card-foreground mb-2">
+                  Nutrition Analysis
+                </h2>
+                <p className="text-muted-foreground">
+                  Here's what we found in your meal
+                </p>
+              </div>
+              <MacroResults data={results} />
+            </div>
+          )}
+        </div>
+
+        {/* Footer */}
+        <footer className="text-center mt-16 pt-8 border-t border-border">
+          <p className="text-sm text-muted-foreground">
+            Powered by <span className="font-semibold text-primary">Viflex AI Nutrition</span> • Privacy First
+          </p>
+        </footer>
       </div>
     </div>
   );
