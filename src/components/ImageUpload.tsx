@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
-import { Upload, Camera, X } from 'lucide-react';
+import { Upload, Camera, X, Image as ImageIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { CameraCapture } from './CameraCapture';
 
 interface ImageUploadProps {
   onImageSelect: (file: File) => void;
@@ -17,6 +18,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
   isLoading = false
 }) => {
   const [isDragOver, setIsDragOver] = useState(false);
+  const [showCamera, setShowCamera] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -48,15 +50,20 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
     }
   };
 
-  const handleClick = () => {
+  const openFileDialog = () => {
     if (!isLoading) {
       fileInputRef.current?.click();
     }
   };
 
+  const handleCameraCapture = (file: File) => {
+    onImageSelect(file);
+    setShowCamera(false);
+  };
+
   if (selectedImage) {
     return (
-      <Card className="relative w-full max-w-md mx-auto bg-gradient-card border-card-border shadow-md">
+      <Card className="relative w-full max-w-md mx-auto bg-gradient-card border-card-border shadow-glow">
         <div className="aspect-square w-full overflow-hidden rounded-lg">
           <img
             src={URL.createObjectURL(selectedImage)}
@@ -78,54 +85,121 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
   }
 
   return (
-    <Card
-      className={`
-        relative w-full max-w-md mx-auto p-8 
-        bg-gradient-card border-2 border-dashed 
-        cursor-pointer transition-all duration-300 ease-smooth
-        ${isDragOver 
-          ? 'border-primary bg-accent/50 shadow-glow' 
-          : 'border-border hover:border-primary/60 hover:bg-accent/30'
-        }
-        ${isLoading ? 'pointer-events-none opacity-60' : ''}
-      `}
-      onClick={handleClick}
-      onDragOver={handleDragOver}
-      onDragLeave={handleDragLeave}
-      onDrop={handleDrop}
-    >
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept=".jpg,.jpeg,.png"
-        onChange={handleFileSelect}
-        className="hidden"
-        disabled={isLoading}
-      />
-      
-      <div className="text-center space-y-4">
-        <div className="flex justify-center">
-          <div className="p-4 bg-primary/10 rounded-full">
-            {isDragOver ? (
-              <Camera className="w-8 h-8 text-primary animate-pulse" />
-            ) : (
-              <Upload className="w-8 h-8 text-primary" />
-            )}
+    <>
+      <div className="w-full max-w-md mx-auto space-y-6">
+        {/* Upload Options */}
+        <div className="grid grid-cols-2 gap-4">
+          <Card
+            className={`
+              relative p-6 bg-gradient-card border-2 border-dashed 
+              cursor-pointer transition-all duration-300 ease-smooth
+              ${isDragOver 
+                ? 'border-primary bg-accent/50 shadow-red-glow' 
+                : 'border-border hover:border-primary/60 hover:bg-accent/30 hover:shadow-glow'
+              }
+              ${isLoading ? 'pointer-events-none opacity-60' : ''}
+            `}
+            onClick={openFileDialog}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+          >
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".jpg,.jpeg,.png"
+              onChange={handleFileSelect}
+              className="hidden"
+              disabled={isLoading}
+            />
+            
+            <div className="text-center space-y-3">
+              <div className="flex justify-center">
+                <div className="p-3 bg-primary/20 rounded-full">
+                  <ImageIcon className="w-6 h-6 text-primary" />
+                </div>
+              </div>
+              <div>
+                <h3 className="font-semibold text-sm text-card-foreground">
+                  Upload Photo
+                </h3>
+                <p className="text-xs text-muted-foreground mt-1">
+                  From gallery
+                </p>
+              </div>
+            </div>
+          </Card>
+
+          <Card
+            className={`
+              relative p-6 bg-gradient-card border-2 border-dashed 
+              cursor-pointer transition-all duration-300 ease-smooth
+              border-border hover:border-primary/60 hover:bg-accent/30 hover:shadow-glow
+              ${isLoading ? 'pointer-events-none opacity-60' : ''}
+            `}
+            onClick={() => setShowCamera(true)}
+          >
+            <div className="text-center space-y-3">
+              <div className="flex justify-center">
+                <div className="p-3 bg-primary/20 rounded-full">
+                  <Camera className="w-6 h-6 text-primary" />
+                </div>
+              </div>
+              <div>
+                <h3 className="font-semibold text-sm text-card-foreground">
+                  Take Photo
+                </h3>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Use camera
+                </p>
+              </div>
+            </div>
+          </Card>
+        </div>
+
+        {/* Drop Zone */}
+        <Card
+          className={`
+            relative p-8 bg-gradient-card border-2 border-dashed 
+            cursor-pointer transition-all duration-300 ease-smooth
+            ${isDragOver 
+              ? 'border-primary bg-accent/50 shadow-red-glow' 
+              : 'border-border hover:border-primary/60 hover:bg-accent/30'
+            }
+            ${isLoading ? 'pointer-events-none opacity-60' : ''}
+          `}
+          onClick={openFileDialog}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
+          <div className="text-center space-y-4">
+            <div className="flex justify-center">
+              <div className="p-4 bg-primary/10 rounded-full">
+                <Upload className="w-8 h-8 text-primary" />
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <h3 className="font-semibold text-lg text-card-foreground">
+                {isDragOver ? 'Drop your meal photo' : 'Or drag & drop here'}
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                JPG, PNG up to 10MB
+              </p>
+            </div>
           </div>
-        </div>
-        
-        <div className="space-y-2">
-          <h3 className="font-semibold text-lg text-card-foreground">
-            {isDragOver ? 'Drop your meal photo' : 'Upload meal photo'}
-          </h3>
-          <p className="text-sm text-muted-foreground">
-            Drag & drop or tap to select
-          </p>
-          <p className="text-xs text-muted-foreground">
-            JPG, PNG up to 10MB
-          </p>
-        </div>
+        </Card>
       </div>
-    </Card>
+
+      {/* Camera Modal */}
+      {showCamera && (
+        <CameraCapture
+          onImageCapture={handleCameraCapture}
+          onClose={() => setShowCamera(false)}
+          isLoading={isLoading}
+        />
+      )}
+    </>
   );
 };

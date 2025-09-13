@@ -81,6 +81,7 @@ export default {
         "gradient-hero": "var(--gradient-hero)",
         "gradient-surface": "var(--gradient-surface)",
         "gradient-card": "var(--gradient-card)",
+        "gradient-accent": "var(--gradient-accent)",
       },
       boxShadow: {
         sm: "var(--shadow-sm)",
@@ -88,6 +89,7 @@ export default {
         md: "var(--shadow-md)",
         lg: "var(--shadow-lg)",
         glow: "var(--shadow-glow)",
+        "red-glow": "var(--shadow-red-glow)",
       },
       transitionTimingFunction: {
         smooth: "var(--transition-smooth)",

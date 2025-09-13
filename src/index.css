@@ -7,43 +7,43 @@
 @layer base {
   :root {
     /* Backgrounds & Surfaces */
-    --background: 120 20% 98%;
-    --foreground: 140 15% 15%;
-    --surface: 0 0% 100%;
-    --surface-elevated: 120 25% 96%;
+    --background: 0 0% 8%;
+    --foreground: 0 0% 95%;
+    --surface: 0 0% 12%;
+    --surface-elevated: 0 0% 16%;
 
-    /* Brand Colors - Fresh Nutrition Theme */
-    --primary: 142 85% 35%;        /* Fresh Green */
+    /* Brand Colors - Bold Red/Black Theme */
+    --primary: 0 84% 60%;          /* Vibrant Red */
     --primary-foreground: 0 0% 100%;
-    --primary-light: 142 70% 60%;
-    --primary-dark: 142 90% 25%;
+    --primary-light: 0 75% 70%;
+    --primary-dark: 0 90% 50%;
 
-    --secondary: 35 85% 60%;       /* Warm Orange */
-    --secondary-foreground: 0 0% 100%;
-    --secondary-light: 35 80% 75%;
+    --secondary: 0 0% 20%;         /* Dark Gray */
+    --secondary-foreground: 0 0% 95%;
+    --secondary-light: 0 0% 30%;
 
     /* Nutrition Macro Colors */
-    --protein: 220 85% 60%;        /* Blue for Protein */
-    --carbs: 35 85% 60%;          /* Orange for Carbs */
-    --fat: 280 60% 65%;           /* Purple for Fat */
+    --protein: 0 84% 60%;          /* Red for Protein */
+    --carbs: 30 100% 60%;          /* Gold for Carbs */
+    --fat: 260 60% 65%;            /* Purple for Fat */
 
     /* UI Colors */
-    --card: 0 0% 100%;
-    --card-foreground: 140 15% 15%;
-    --card-border: 120 15% 90%;
+    --card: 0 0% 12%;
+    --card-foreground: 0 0% 95%;
+    --card-border: 0 0% 20%;
 
-    --muted: 120 15% 95%;
-    --muted-foreground: 140 10% 45%;
+    --muted: 0 0% 16%;
+    --muted-foreground: 0 0% 65%;
 
-    --accent: 120 30% 95%;
-    --accent-foreground: 142 85% 35%;
+    --accent: 0 0% 16%;
+    --accent-foreground: 0 84% 60%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 120 15% 88%;
-    --input: 120 15% 95%;
-    --ring: 142 85% 35%;
+    --border: 0 0% 20%;
+    --input: 0 0% 16%;
+    --ring: 0 84% 60%;
 
     /* Design Tokens */
     --radius: 1rem;
@@ -51,81 +51,76 @@
     --radius-sm: 0.75rem;
 
     /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(142 85% 35%) 0%, hsl(142 70% 45%) 100%);
-    --gradient-surface: linear-gradient(180deg, hsl(120 25% 98%) 0%, hsl(120 20% 96%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(120 25% 98%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(0 84% 60%) 0%, hsl(0 90% 50%) 100%);
+    --gradient-surface: linear-gradient(180deg, hsl(0 0% 8%) 0%, hsl(0 0% 12%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 12%) 0%, hsl(0 0% 16%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(0 84% 60%) 0%, hsl(0 0% 20%) 100%);
 
     /* Shadows */
-    --shadow-sm: 0 2px 8px hsl(142 85% 35% / 0.08);
-    --shadow-md: 0 4px 16px hsl(142 85% 35% / 0.12);
-    --shadow-lg: 0 8px 32px hsl(142 85% 35% / 0.16);
-    --shadow-glow: 0 0 24px hsl(142 85% 35% / 0.25);
+    --shadow-sm: 0 2px 8px hsl(0 0% 0% / 0.3);
+    --shadow-md: 0 4px 16px hsl(0 0% 0% / 0.4);
+    --shadow-lg: 0 8px 32px hsl(0 0% 0% / 0.5);
+    --shadow-glow: 0 0 30px hsl(0 84% 60% / 0.4);
+    --shadow-red-glow: 0 0 40px hsl(0 84% 60% / 0.6);
 
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
-  .dark {
-    --background: 140 15% 8%;
-    --foreground: 120 20% 95%;
-    --surface: 140 15% 10%;
-    --surface-elevated: 140 15% 12%;
+  .light {
+    --background: 0 0% 98%;
+    --foreground: 0 0% 15%;
+    --surface: 0 0% 100%;
+    --surface-elevated: 0 0% 98%;
     
-    --primary: 142 70% 60%;
-    --primary-foreground: 140 15% 8%;
-    --primary-light: 142 60% 70%;
-    --primary-dark: 142 80% 50%;
+    --primary: 0 84% 60%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 0 75% 70%;
+    --primary-dark: 0 90% 50%;
 
-    --secondary: 35 80% 65%;
-    --secondary-foreground: 140 15% 8%;
-    --secondary-light: 35 70% 75%;
+    --secondary: 0 0% 90%;
+    --secondary-foreground: 0 0% 15%;
+    --secondary-light: 0 0% 95%;
 
-    --protein: 220 80% 65%;
-    --carbs: 35 80% 65%;
-    --fat: 280 55% 70%;
+    --protein: 0 84% 60%;
+    --carbs: 30 100% 55%;
+    --fat: 260 60% 60%;
 
-    --card: 140 15% 10%;
-    --card-foreground: 120 20% 95%;
-    --card-border: 140 15% 20%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 15%;
+    --card-border: 0 0% 85%;
 
-    --muted: 140 15% 15%;
-    --muted-foreground: 120 10% 60%;
+    --muted: 0 0% 95%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 140 15% 15%;
-    --accent-foreground: 142 70% 60%;
+    --accent: 0 0% 95%;
+    --accent-foreground: 0 84% 60%;
 
-    --destructive: 0 75% 55%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 140 15% 20%;
-    --input: 140 15% 15%;
-    --ring: 142 70% 60%;
+    --border: 0 0% 85%;
+    --input: 0 0% 95%;
+    --ring: 0 84% 60%;
 
-    --gradient-hero: linear-gradient(135deg, hsl(142 70% 60%) 0%, hsl(142 60% 50%) 100%);
-    --gradient-surface: linear-gradient(180deg, hsl(140 15% 8%) 0%, hsl(140 15% 10%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(140 15% 10%) 0%, hsl(140 15% 12%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(0 84% 60%) 0%, hsl(0 90% 50%) 100%);
+    --gradient-surface: linear-gradient(180deg, hsl(0 0% 98%) 0%, hsl(0 0% 95%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(0 0% 98%) 100%);
 
-    --shadow-sm: 0 2px 8px hsl(140 15% 5% / 0.3);
-    --shadow-md: 0 4px 16px hsl(140 15% 5% / 0.4);
-    --shadow-lg: 0 8px 32px hsl(140 15% 5% / 0.5);
-    --shadow-glow: 0 0 24px hsl(142 70% 60% / 0.3);
+    --shadow-sm: 0 2px 8px hsl(0 0% 0% / 0.08);
+    --shadow-md: 0 4px 16px hsl(0 0% 0% / 0.12);
+    --shadow-lg: 0 8px 32px hsl(0 0% 0% / 0.16);
+    --shadow-glow: 0 0 30px hsl(0 84% 60% / 0.25);
   }
 }
 
@@ -155,6 +150,14 @@
   .animate-fade-in {
     animation: fadeIn 0.6s ease-out;
   }
+
+  .pulse-red {
+    animation: pulseRed 2s ease-in-out infinite;
+  }
+
+  .glow-red {
+    box-shadow: var(--shadow-red-glow);
+  }
   
   @keyframes fadeIn {
     from {
@@ -164,6 +167,15 @@
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+
+  @keyframes pulseRed {
+    0%, 100% {
+      box-shadow: 0 0 20px hsl(0 84% 60% / 0.4);
+    }
+    50% {
+      box-shadow: 0 0 40px hsl(0 84% 60% / 0.8);
     }
   }
 }

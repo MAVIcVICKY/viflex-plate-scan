@@ -78,21 +78,22 @@ const Index = () => {
         {/* Header */}
         <div className="text-center mb-12">
           <div className="flex items-center justify-center mb-6">
-            <div className="p-4 bg-gradient-hero rounded-2xl shadow-glow">
-              <Utensils className="w-12 h-12 text-white" />
+            <div className="p-6 bg-gradient-hero rounded-3xl shadow-red-glow pulse-red">
+              <Utensils className="w-16 h-16 text-white" />
             </div>
           </div>
           
-          <h1 className="text-5xl font-bold bg-gradient-hero bg-clip-text text-transparent mb-4">
+          <h1 className="text-6xl font-bold bg-gradient-hero bg-clip-text text-transparent mb-6 tracking-tight">
             Viflex Calories
           </h1>
           
-          <p className="text-xl text-muted-foreground font-medium">
+          <p className="text-2xl text-foreground font-bold mb-2">
             Snap a Meal. See the Macros.
           </p>
           
-          <p className="text-sm text-muted-foreground mt-2 max-w-md mx-auto">
-            Get instant nutrition analysis for any meal with our AI-powered macro tracker
+          <p className="text-base text-muted-foreground mt-3 max-w-lg mx-auto leading-relaxed">
+            Revolutionary AI-powered nutrition analysis. Upload or capture any meal photo 
+            and get instant macro breakdown with stunning accuracy.
           </p>
         </div>
 
@@ -113,9 +114,9 @@ const Index = () => {
                 onClick={analyzeImage}
                 disabled={isLoading || !selectedImage}
                 size="lg"
-                className="w-full max-w-md bg-gradient-hero hover:opacity-90 text-white font-semibold py-4 px-8 text-lg shadow-lg hover:shadow-glow transition-all duration-300 ease-smooth"
+                className="w-full max-w-md bg-gradient-hero hover:opacity-90 text-white font-bold py-6 px-10 text-xl shadow-red-glow hover:shadow-lg transition-all duration-300 ease-smooth pulse-red"
               >
-                {isLoading ? 'Analyzing...' : 'Analyze Meal'}
+                {isLoading ? 'Analyzing...' : 'Analyze Meal 🔥'}
               </Button>
             </div>
           )}
