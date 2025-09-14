@@ -16,6 +16,22 @@ interface FoodItem {
   fat: number;
 }
 
+interface ApiResponse {
+  action: string;
+  response: {
+    output: {
+      status: string;
+      food: FoodItem[];
+      total: {
+        calories: number;
+        protein: number;
+        carbs: number;
+        fat: number;
+      };
+    };
+  };
+}
+
 interface AnalysisResponse {
   output: {
     status: string;
@@ -67,8 +83,9 @@ const Index = () => {
         throw new Error('Failed to analyze meal');
       }
 
-      const responseData = await response.json();
-      const data: AnalysisResponse = Array.isArray(responseData) ? responseData[0] : responseData;
+      const responseData: ApiResponse[] = await response.json();
+      const apiResponse: ApiResponse = Array.isArray(responseData) ? responseData[0] : responseData;
+      const data: AnalysisResponse = apiResponse.response;
       setResults(data);
       
       toast({
