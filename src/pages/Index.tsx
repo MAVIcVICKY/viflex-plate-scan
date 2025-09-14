@@ -76,16 +76,28 @@ const Index = () => {
 
       const response = await fetch('http://localhost:5678/webhook-test/Meal AI', {
         method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Accept': 'application/json',
+        },
         body: formData,
       });
 
       if (!response.ok) {
-        throw new Error('Failed to analyze meal');
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const responseData: ApiResponse[] = await response.json();
+      console.log('Raw API Response:', responseData);
+      
+      // Handle array or single object response
       const apiResponse: ApiResponse = Array.isArray(responseData) ? responseData[0] : responseData;
+      console.log('Parsed API Response:', apiResponse);
+      
+      // Extract the actual data from the nested response structure
       const data: AnalysisResponse = apiResponse.response;
+      console.log('Final data for display:', data);
+      
       setResults(data);
       
       toast({
@@ -93,7 +105,15 @@ const Index = () => {
         description: "Your meal has been successfully analyzed.",
       });
     } catch (err) {
-      const errorMessage = 'Failed to analyze meal. Please try again.';
+      console.error('API Error:', err);
+      let errorMessage = 'Failed to analyze meal. Please try again.';
+      
+      if (err instanceof TypeError && err.message.includes('fetch')) {
+        errorMessage = 'Network error: Unable to connect to API. Make sure the webhook server is running on localhost:5678';
+      } else if (err instanceof Error) {
+        errorMessage = `API Error: ${err.message}`;
+      }
+      
       setError(errorMessage);
       
       toast({
