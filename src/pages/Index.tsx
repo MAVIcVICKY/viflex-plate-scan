@@ -3,20 +3,36 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { ImageUpload } from '@/components/ImageUpload';
-import { MacroResults } from '@/components/MacroResults';
+import { FoodResults } from '@/components/FoodResults';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { AlertTriangle, Utensils } from 'lucide-react';
 
-interface MacroData {
-  protein_g: number;
-  carbs_g: number;
-  fat_g: number;
+interface FoodItem {
+  name: string;
+  quantity: string;
+  calories: number;
+  protein: number;
+  carbs: number;
+  fat: number;
+}
+
+interface AnalysisResponse {
+  output: {
+    status: string;
+    food: FoodItem[];
+    total: {
+      calories: number;
+      protein: number;
+      carbs: number;
+      fat: number;
+    };
+  };
 }
 
 const Index = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [results, setResults] = useState<MacroData | null>(null);
+  const [results, setResults] = useState<AnalysisResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
 
@@ -42,7 +58,7 @@ const Index = () => {
       const formData = new FormData();
       formData.append('image', selectedImage);
 
-      const response = await fetch('/api/analyze-meal', {
+      const response = await fetch('http://localhost:5678/webhook-test/Meal AI', {
         method: 'POST',
         body: formData,
       });
@@ -51,7 +67,8 @@ const Index = () => {
         throw new Error('Failed to analyze meal');
       }
 
-      const data: MacroData = await response.json();
+      const responseData = await response.json();
+      const data: AnalysisResponse = Array.isArray(responseData) ? responseData[0] : responseData;
       setResults(data);
       
       toast({
@@ -148,7 +165,7 @@ const Index = () => {
                   Here's what we found in your meal
                 </p>
               </div>
-              <MacroResults data={results} />
+              <FoodResults data={results} />
             </div>
           )}
         </div>
