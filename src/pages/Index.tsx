@@ -17,17 +17,14 @@ interface FoodItem {
 }
 
 interface ApiResponse {
-  action: string;
-  response: {
-    output: {
-      status: string;
-      food: FoodItem[];
-      total: {
-        calories: number;
-        protein: number;
-        carbs: number;
-        fat: number;
-      };
+  output: {
+    status: string;
+    food: FoodItem[];
+    total: {
+      calories: number;
+      protein: number;
+      carbs: number;
+      fat: number;
     };
   };
 }
@@ -87,15 +84,11 @@ const Index = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const responseData: ApiResponse[] = await response.json();
+      const responseData: ApiResponse = await response.json();
       console.log('Raw API Response:', responseData);
       
-      // Handle array or single object response
-      const apiResponse: ApiResponse = Array.isArray(responseData) ? responseData[0] : responseData;
-      console.log('Parsed API Response:', apiResponse);
-      
-      // Extract the actual data from the nested response structure
-      const data: AnalysisResponse = apiResponse.response;
+      // Extract the actual data from the response structure
+      const data: AnalysisResponse = responseData;
       console.log('Final data for display:', data);
       
       setResults(data);
