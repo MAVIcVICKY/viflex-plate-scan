@@ -161,6 +161,41 @@ const Index = () => {
             isLoading={isLoading}
           />
 
+          {/* Test Button */}
+          <div className="text-center space-y-4">
+            <Button
+              onClick={() => {
+                const testData: AnalysisResponse = {
+                  output: {
+                    status: "success",
+                    food: [
+                      {
+                        name: "Hard-boiled egg",
+                        quantity: "6 large eggs",
+                        calories: 468,
+                        protein: 37.8,
+                        carbs: 3.6,
+                        fat: 31.8
+                      }
+                    ],
+                    total: {
+                      calories: 468,
+                      protein: 37.8,
+                      carbs: 3.6,
+                      fat: 31.8
+                    }
+                  }
+                };
+                setResults(testData);
+                setError(null);
+              }}
+              size="lg"
+              className="w-full max-w-md bg-gradient-hero hover:opacity-90 text-white font-bold py-6 px-10 text-xl shadow-red-glow hover:shadow-lg transition-all duration-300 ease-smooth pulse-red"
+            >
+              Show Test Data 🥚
+            </Button>
+          </div>
+
           {/* Analyze Button */}
           {selectedImage && (
             <div className="text-center">
