@@ -71,7 +71,7 @@ const Index = () => {
       const formData = new FormData();
       formData.append('image', selectedImage);
 
-      const response = await fetch('http://localhost:5678/webhook-test/Meal AI', {
+      const response = await fetch('http://localhost:5678/webhook/Meal AI', {
         method: 'POST',
         mode: 'cors',
         headers: {

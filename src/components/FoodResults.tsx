@@ -99,24 +99,24 @@ const FoodItemCard: React.FC<{ item: FoodItem }> = ({ item }) => (
           <div className="flex h-4 rounded-full overflow-hidden bg-muted">
             <div 
               className="bg-protein transition-all duration-700 ease-smooth" 
-              style={{ width: `${(item.protein * 4 / item.calories * 100)}%` }}
-              title={`Protein: ${Math.round((item.protein * 4 / item.calories) * 100)}%`}
+              style={{ width: item.calories > 0 ? `${Math.max(0, Math.min(100, (item.protein * 4 / item.calories * 100)))}%` : '0%' }}
+              title={`Protein: ${item.calories > 0 ? Math.round((item.protein * 4 / item.calories) * 100) : 0}%`}
             />
             <div 
               className="bg-carbs transition-all duration-700 ease-smooth" 
-              style={{ width: `${(item.carbs * 4 / item.calories * 100)}%` }}
-              title={`Carbs: ${Math.round((item.carbs * 4 / item.calories) * 100)}%`}
+              style={{ width: item.calories > 0 ? `${Math.max(0, Math.min(100, (item.carbs * 4 / item.calories * 100)))}%` : '0%' }}
+              title={`Carbs: ${item.calories > 0 ? Math.round((item.carbs * 4 / item.calories) * 100) : 0}%`}
             />
             <div 
               className="bg-fat transition-all duration-700 ease-smooth" 
-              style={{ width: `${(item.fat * 9 / item.calories * 100)}%` }}
-              title={`Fat: ${Math.round((item.fat * 9 / item.calories) * 100)}%`}
+              style={{ width: item.calories > 0 ? `${Math.max(0, Math.min(100, (item.fat * 9 / item.calories * 100)))}%` : '0%' }}
+              title={`Fat: ${item.calories > 0 ? Math.round((item.fat * 9 / item.calories) * 100) : 0}%`}
             />
           </div>
           <div className="flex justify-between text-xs text-muted-foreground mt-1">
-            <span>P: {Math.round((item.protein * 4 / item.calories) * 100)}%</span>
-            <span>C: {Math.round((item.carbs * 4 / item.calories) * 100)}%</span>
-            <span>F: {Math.round((item.fat * 9 / item.calories) * 100)}%</span>
+            <span>P: {item.calories > 0 ? Math.round((item.protein * 4 / item.calories) * 100) : 0}%</span>
+            <span>C: {item.calories > 0 ? Math.round((item.carbs * 4 / item.calories) * 100) : 0}%</span>
+            <span>F: {item.calories > 0 ? Math.round((item.fat * 9 / item.calories) * 100) : 0}%</span>
           </div>
         </div>
       </div>
@@ -187,7 +187,7 @@ export const FoodResults: React.FC<FoodResultsProps> = ({ data }) => {
         />
       </div>
 
-      {/* Macro Percentages */}
+        {/* Macro Percentages */}
       <Card className="p-6 bg-gradient-card border-card-border">
         <h4 className="text-lg font-bold text-card-foreground mb-4 text-center">
           Caloric Distribution
@@ -195,24 +195,24 @@ export const FoodResults: React.FC<FoodResultsProps> = ({ data }) => {
         <div className="grid grid-cols-3 gap-4 mb-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-protein">
-              {Math.round((total.protein * 4 / total.calories) * 100)}%
+              {total.calories > 0 ? Math.round((total.protein * 4 / total.calories) * 100) : 0}%
             </div>
             <p className="text-sm text-muted-foreground">Protein</p>
-            <p className="text-xs text-muted-foreground">{total.protein * 4} kcal</p>
+            <p className="text-xs text-muted-foreground">{Math.round(total.protein * 4)} kcal</p>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-carbs">
-              {Math.round((total.carbs * 4 / total.calories) * 100)}%
+              {total.calories > 0 ? Math.round((total.carbs * 4 / total.calories) * 100) : 0}%
             </div>
             <p className="text-sm text-muted-foreground">Carbs</p>
-            <p className="text-xs text-muted-foreground">{total.carbs * 4} kcal</p>
+            <p className="text-xs text-muted-foreground">{Math.round(total.carbs * 4)} kcal</p>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-fat">
-              {Math.round((total.fat * 9 / total.calories) * 100)}%
+              {total.calories > 0 ? Math.round((total.fat * 9 / total.calories) * 100) : 0}%
             </div>
             <p className="text-sm text-muted-foreground">Fat</p>
-            <p className="text-xs text-muted-foreground">{total.fat * 9} kcal</p>
+            <p className="text-xs text-muted-foreground">{Math.round(total.fat * 9)} kcal</p>
           </div>
         </div>
 
@@ -220,21 +220,21 @@ export const FoodResults: React.FC<FoodResultsProps> = ({ data }) => {
         <div className="flex h-6 rounded-full overflow-hidden bg-muted shadow-inner">
           <div 
             className="bg-protein transition-all duration-1000 ease-smooth flex items-center justify-center text-xs font-bold text-white" 
-            style={{ width: `${(total.protein * 4 / total.calories * 100)}%` }}
+            style={{ width: total.calories > 0 ? `${Math.max(0, Math.min(100, (total.protein * 4 / total.calories * 100)))}%` : '0%' }}
           >
-            P
+            {total.calories > 0 && (total.protein * 4 / total.calories) > 0.1 ? 'P' : ''}
           </div>
           <div 
             className="bg-carbs transition-all duration-1000 ease-smooth flex items-center justify-center text-xs font-bold text-white" 
-            style={{ width: `${(total.carbs * 4 / total.calories * 100)}%` }}
+            style={{ width: total.calories > 0 ? `${Math.max(0, Math.min(100, (total.carbs * 4 / total.calories * 100)))}%` : '0%' }}
           >
-            C
+            {total.calories > 0 && (total.carbs * 4 / total.calories) > 0.1 ? 'C' : ''}
           </div>
           <div 
             className="bg-fat transition-all duration-1000 ease-smooth flex items-center justify-center text-xs font-bold text-white" 
-            style={{ width: `${(total.fat * 9 / total.calories * 100)}%` }}
+            style={{ width: total.calories > 0 ? `${Math.max(0, Math.min(100, (total.fat * 9 / total.calories * 100)))}%` : '0%' }}
           >
-            F
+            {total.calories > 0 && (total.fat * 9 / total.calories) > 0.1 ? 'F' : ''}
           </div>
         </div>
       </Card>
