@@ -5,6 +5,7 @@ import { useToast } from '@/hooks/use-toast';
 import { ImageUpload } from '@/components/ImageUpload';
 import { FoodResults } from '@/components/FoodResults';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { ThreeBackground } from '@/components/ThreeBackground';
 import { AlertTriangle, Utensils } from 'lucide-react';
 
 interface FoodItem {
@@ -120,8 +121,9 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-surface">
-      <div className="container mx-auto px-4 py-8 max-w-2xl">
+    <div className="min-h-screen bg-gradient-surface relative">
+      <ThreeBackground />
+      <div className="container mx-auto px-4 py-8 max-w-2xl relative z-10">
         {/* Header */}
         <div className="text-center mb-12">
           <div className="flex items-center justify-center mb-6">
