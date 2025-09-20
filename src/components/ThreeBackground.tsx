@@ -2,7 +2,7 @@ import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
-const FloatingShape = ({ position, scale, speed, color }: {
+const FloatingOrb = ({ position, scale, speed, color }: {
   position: [number, number, number];
   scale: number;
   speed: number;
@@ -35,8 +35,8 @@ const FloatingShape = ({ position, scale, speed, color }: {
   );
 };
 
-const Scene = () => {
-  const shapes = useMemo(() => {
+const BackgroundScene = () => {
+  const orbs = useMemo(() => {
     const colors = [
       '#6366f1', // Indigo
       '#8b5cf6', // Violet
@@ -66,13 +66,13 @@ const Scene = () => {
       <pointLight position={[5, -5, 5]} intensity={1.2} color="#ec4899" />
       <pointLight position={[0, 0, -5]} intensity={0.8} color="#06b6d4" />
       
-      {shapes.map((shape, index) => (
-        <FloatingShape
+      {orbs.map((orb, index) => (
+        <FloatingOrb
           key={index}
-          position={shape.position}
-          scale={shape.scale}
-          color={shape.color}
-          speed={shape.speed}
+          position={orb.position}
+          scale={orb.scale}
+          color={orb.color}
+          speed={orb.speed}
         />
       ))}
     </>
@@ -89,7 +89,7 @@ export const ThreeBackground = () => {
         }}
         gl={{ alpha: true, antialias: true }}
       >
-        <Scene />
+        <BackgroundScene />
       </Canvas>
     </div>
   );
