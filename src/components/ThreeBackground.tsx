@@ -85,10 +85,10 @@ const Scene = () => {
 
 export const ThreeBackground = () => {
   return (
-    <div className="fixed inset-0 -z-10 opacity-30">
+    <div className="fixed inset-0 -z-50 opacity-20">
       <Canvas
         camera={{ position: [0, 0, 10], fov: 75 }}
-        style={{ background: 'radial-gradient(circle, rgba(20,20,40,0.8) 0%, rgba(10,10,20,0.9) 100%)' }}
+        style={{ background: 'radial-gradient(circle, rgba(20,20,40,0.5) 0%, rgba(10,10,20,0.7) 100%)' }}
         gl={{ alpha: true, antialias: true }}
       >
         <Scene />

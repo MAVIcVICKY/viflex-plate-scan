@@ -223,7 +223,7 @@ const Index = () => {
 
           {/* Results */}
           {results && !isLoading && (
-            <div className="space-y-6">
+            <div className="space-y-6 relative z-20">
               <div className="text-center">
                 <h2 className="text-2xl font-bold text-card-foreground mb-2">
                   Nutrition Analysis
@@ -238,7 +238,7 @@ const Index = () => {
         </div>
 
         {/* Footer */}
-        <footer className="text-center mt-16 pt-8 border-t border-border">
+        <footer className="text-center mt-16 pt-8 border-t border-border relative z-20">
           <p className="text-sm text-muted-foreground">
             Powered by <span className="font-semibold text-primary">Viflex AI Nutrition</span> • Privacy First
           </p>
