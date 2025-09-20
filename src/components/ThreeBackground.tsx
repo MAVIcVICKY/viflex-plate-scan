@@ -38,12 +38,12 @@ const FloatingOrb = ({ position, scale, speed, color }: {
 const BackgroundScene = () => {
   const orbs = useMemo(() => {
     const colors = [
-      '#6366f1', // Indigo
-      '#8b5cf6', // Violet
+      '#dc2626', // Red
+      '#b91c1c', // Dark Red
+      '#991b1b', // Darker Red
+      '#7c2d12', // Red Brown
       '#a855f7', // Purple
-      '#ec4899', // Pink
-      '#06b6d4', // Cyan
-      '#3b82f6', // Blue
+      '#9333ea', // Dark Purple
     ];
 
     return Array.from({ length: 6 }, (_, i) => ({
@@ -60,11 +60,11 @@ const BackgroundScene = () => {
 
   return (
     <>
-      <ambientLight intensity={0.3} />
-      <directionalLight position={[10, 10, 5]} intensity={0.8} color="#8b5cf6" />
-      <pointLight position={[-5, 5, 5]} intensity={1.2} color="#6366f1" />
-      <pointLight position={[5, -5, 5]} intensity={1.2} color="#ec4899" />
-      <pointLight position={[0, 0, -5]} intensity={0.8} color="#06b6d4" />
+      <ambientLight intensity={0.2} />
+      <directionalLight position={[10, 10, 5]} intensity={1.0} color="#dc2626" />
+      <pointLight position={[-5, 5, 5]} intensity={1.5} color="#b91c1c" />
+      <pointLight position={[5, -5, 5]} intensity={1.5} color="#a855f7" />
+      <pointLight position={[0, 0, -5]} intensity={1.0} color="#9333ea" />
       
       {orbs.map((orb, index) => (
         <FloatingOrb
@@ -81,11 +81,11 @@ const BackgroundScene = () => {
 
 export const ThreeBackground = () => {
   return (
-    <div className="fixed inset-0 -z-50 opacity-30">
+    <div className="fixed inset-0 -z-50 opacity-60">
       <Canvas
         camera={{ position: [0, 0, 10], fov: 60 }}
         style={{ 
-          background: 'linear-gradient(135deg, #0f0f23 0%, #1a0b2e 25%, #16213e 50%, #0f3460 75%, #0a1e3e 100%)'
+          background: '#000000'
         }}
         gl={{ alpha: true, antialias: true }}
       >
