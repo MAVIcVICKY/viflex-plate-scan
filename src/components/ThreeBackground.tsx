@@ -1,6 +1,5 @@
 import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { MeshDistortMaterial, Float, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 
 const AnimatedShape = ({ position, geometry, color, speed }: {
@@ -20,23 +19,16 @@ const AnimatedShape = ({ position, geometry, color, speed }: {
   });
 
   return (
-    <Float
-      speed={2}
-      rotationIntensity={0.8}
-      floatIntensity={0.5}
-    >
-      <mesh ref={meshRef} position={position} scale={0.8}>
-        <primitive object={geometry} />
-        <MeshDistortMaterial
-          color={color}
-          metalness={0.9}
-          roughness={0.1}
-          distort={0.3}
-          speed={2}
-          envMapIntensity={2}
-        />
-      </mesh>
-    </Float>
+    <mesh ref={meshRef} position={position} scale={0.8}>
+      <primitive object={geometry} />
+      <meshStandardMaterial
+        color={color}
+        metalness={0.8}
+        roughness={0.2}
+        emissive={color}
+        emissiveIntensity={0.1}
+      />
+    </mesh>
   );
 };
 
@@ -72,11 +64,11 @@ const Scene = () => {
 
   return (
     <>
-      <Environment preset="studio" />
-      <ambientLight intensity={0.3} />
-      <directionalLight position={[10, 10, 5]} intensity={0.8} />
-      <pointLight position={[-10, -10, -5]} intensity={0.5} color="#ff4444" />
-      <pointLight position={[10, -10, -5]} intensity={0.5} color="#4444ff" />
+      <ambientLight intensity={0.4} />
+      <directionalLight position={[10, 10, 5]} intensity={1} />
+      <pointLight position={[-10, -10, -5]} intensity={0.8} color="#ff4444" />
+      <pointLight position={[10, -10, -5]} intensity={0.8} color="#4444ff" />
+      <pointLight position={[0, 10, -5]} intensity={0.6} color="#ff44ff" />
       
       {shapes.map((shape, index) => (
         <AnimatedShape
@@ -93,10 +85,11 @@ const Scene = () => {
 
 export const ThreeBackground = () => {
   return (
-    <div className="fixed inset-0 -z-10">
+    <div className="fixed inset-0 -z-10 opacity-30">
       <Canvas
         camera={{ position: [0, 0, 10], fov: 75 }}
-        style={{ background: 'transparent' }}
+        style={{ background: 'radial-gradient(circle, rgba(20,20,40,0.8) 0%, rgba(10,10,20,0.9) 100%)' }}
+        gl={{ alpha: true, antialias: true }}
       >
         <Scene />
       </Canvas>
