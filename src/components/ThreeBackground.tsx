@@ -2,31 +2,34 @@ import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
-const AnimatedShape = ({ position, geometry, color, speed }: {
+const FloatingShape = ({ position, scale, speed, color }: {
   position: [number, number, number];
-  geometry: THREE.BufferGeometry;
-  color: string;
+  scale: number;
   speed: number;
+  color: string;
 }) => {
   const meshRef = useRef<THREE.Mesh>(null);
 
   useFrame((state) => {
     if (meshRef.current) {
-      meshRef.current.rotation.x += speed;
-      meshRef.current.rotation.y += speed * 0.8;
-      meshRef.current.rotation.z += speed * 0.6;
+      meshRef.current.rotation.x += speed * 0.3;
+      meshRef.current.rotation.y += speed * 0.5;
+      meshRef.current.position.y += Math.sin(state.clock.elapsedTime * speed * 2) * 0.01;
+      meshRef.current.position.x += Math.cos(state.clock.elapsedTime * speed * 1.5) * 0.005;
     }
   });
 
   return (
-    <mesh ref={meshRef} position={position} scale={0.8}>
-      <primitive object={geometry} />
+    <mesh ref={meshRef} position={position} scale={scale}>
+      <sphereGeometry args={[1, 32, 32]} />
       <meshStandardMaterial
         color={color}
-        metalness={0.8}
-        roughness={0.2}
+        metalness={0.9}
+        roughness={0.1}
         emissive={color}
-        emissiveIntensity={0.1}
+        emissiveIntensity={0.2}
+        transparent
+        opacity={0.8}
       />
     </mesh>
   );
@@ -34,47 +37,40 @@ const AnimatedShape = ({ position, geometry, color, speed }: {
 
 const Scene = () => {
   const shapes = useMemo(() => {
-    const geometries = [
-      new THREE.TorusKnotGeometry(1, 0.3, 64, 8),
-      new THREE.IcosahedronGeometry(1.2, 1),
-      new THREE.OctahedronGeometry(1.5),
-      new THREE.DodecahedronGeometry(1.3),
-    ];
-
     const colors = [
-      '#ff4444', // Red
-      '#4444ff', // Blue  
-      '#ff44ff', // Magenta
-      '#44ffff', // Cyan
-      '#ffff44', // Yellow
-      '#ff8844', // Orange
+      '#6366f1', // Indigo
+      '#8b5cf6', // Violet
+      '#a855f7', // Purple
+      '#ec4899', // Pink
+      '#06b6d4', // Cyan
+      '#3b82f6', // Blue
     ];
 
-    return Array.from({ length: 8 }, (_, i) => ({
+    return Array.from({ length: 6 }, (_, i) => ({
       position: [
-        (Math.random() - 0.5) * 20,
-        (Math.random() - 0.5) * 15,
-        (Math.random() - 0.5) * 10 - 5
+        (Math.random() - 0.5) * 12,
+        (Math.random() - 0.5) * 8,
+        (Math.random() - 0.5) * 6 - 3
       ] as [number, number, number],
-      geometry: geometries[Math.floor(Math.random() * geometries.length)],
-      color: colors[Math.floor(Math.random() * colors.length)],
-      speed: 0.002 + Math.random() * 0.008,
+      scale: 0.5 + Math.random() * 1.5,
+      color: colors[i % colors.length],
+      speed: 0.5 + Math.random() * 1,
     }));
   }, []);
 
   return (
     <>
-      <ambientLight intensity={0.4} />
-      <directionalLight position={[10, 10, 5]} intensity={1} />
-      <pointLight position={[-10, -10, -5]} intensity={0.8} color="#ff4444" />
-      <pointLight position={[10, -10, -5]} intensity={0.8} color="#4444ff" />
-      <pointLight position={[0, 10, -5]} intensity={0.6} color="#ff44ff" />
+      <ambientLight intensity={0.3} />
+      <directionalLight position={[10, 10, 5]} intensity={0.8} color="#8b5cf6" />
+      <pointLight position={[-5, 5, 5]} intensity={1.2} color="#6366f1" />
+      <pointLight position={[5, -5, 5]} intensity={1.2} color="#ec4899" />
+      <pointLight position={[0, 0, -5]} intensity={0.8} color="#06b6d4" />
       
       {shapes.map((shape, index) => (
-        <AnimatedShape
+        <FloatingShape
           key={index}
           position={shape.position}
-          geometry={shape.geometry}
+          scale={shape.scale}
           color={shape.color}
           speed={shape.speed}
         />
@@ -85,10 +81,12 @@ const Scene = () => {
 
 export const ThreeBackground = () => {
   return (
-    <div className="fixed inset-0 -z-50 opacity-20">
+    <div className="fixed inset-0 -z-50 opacity-30">
       <Canvas
-        camera={{ position: [0, 0, 10], fov: 75 }}
-        style={{ background: 'radial-gradient(circle, rgba(20,20,40,0.5) 0%, rgba(10,10,20,0.7) 100%)' }}
+        camera={{ position: [0, 0, 10], fov: 60 }}
+        style={{ 
+          background: 'linear-gradient(135deg, #0f0f23 0%, #1a0b2e 25%, #16213e 50%, #0f3460 75%, #0a1e3e 100%)'
+        }}
         gl={{ alpha: true, antialias: true }}
       >
         <Scene />
