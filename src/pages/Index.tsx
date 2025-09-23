@@ -125,24 +125,24 @@ const Index = () => {
       <ThreeBackground />
       <div className="container mx-auto px-4 py-8 max-w-2xl relative z-10">
         {/* Header */}
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center mb-6">
-            <div className="p-6 bg-gradient-hero rounded-3xl shadow-red-glow pulse-red">
-              <Utensils className="w-16 h-16 text-white" />
+        <div className="text-center mb-12 animate-fade-in">
+          <div className="flex items-center justify-center mb-8">
+            <div className="p-8 bg-gradient-hero rounded-full shadow-red-glow pulse-red hover:scale-110 transition-all duration-500 ease-smooth">
+              <Utensils className="w-20 h-20 text-white" />
             </div>
           </div>
           
-          <h1 className="text-6xl font-bold bg-gradient-hero bg-clip-text text-transparent mb-6 tracking-tight">
+          <h1 className="text-7xl font-black bg-gradient-hero bg-clip-text text-transparent mb-8 tracking-tight hover:scale-105 transition-transform duration-300 cursor-default">
             Viflex Calories
           </h1>
           
-          <p className="text-2xl text-foreground font-bold mb-2">
-            Snap a Meal. See the Macros.
+          <p className="text-3xl text-foreground font-bold mb-4 animate-fade-in" style={{animationDelay: '0.3s'}}>
+            🍕 Snap a Meal. See the Macros. 🍔
           </p>
           
-          <p className="text-base text-muted-foreground mt-3 max-w-lg mx-auto leading-relaxed">
-            Revolutionary AI-powered nutrition analysis. Upload or capture any meal photo 
-            and get instant macro breakdown with stunning accuracy.
+          <p className="text-lg text-muted-foreground mt-4 max-w-2xl mx-auto leading-relaxed animate-fade-in" style={{animationDelay: '0.6s'}}>
+            Revolutionary AI-powered nutrition analysis with stunning 3D food visualization. 
+            Upload or capture any meal photo and get instant macro breakdown with incredible accuracy! 🔥
           </p>
         </div>
 
